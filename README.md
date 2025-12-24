@@ -1,165 +1,100 @@
-# Virtual Companion (Sanal Bebek) 🐰
 
-A kawaii-themed virtual companion mobile app built with Expo, React Native, TypeScript, NativeWind, and Firebase.
+# Sanal Arkadaşım 🐰 (Virtual Companion)
 
-## Features
+Expo, React Native, TypeScript, NativeWind ve Firebase ile oluşturulmuş, kawaii temalı bir sanal arkadaş mobil uygulaması.
 
-- 🔐 **Firebase Authentication** - Email/password signup and login
-- 🐰 **Virtual Friend** - Create and care for your cute companion
-- 🍎 **Interactions** - Feed, Play, and Rest with your friend
-- 📊 **State Management** - Friend states: hungry, tired, happy, bored
-- 📜 **History** - Track all your interactions
-- 🔔 **Notifications** - Local push notifications when your friend needs you
-- 🎨 **Kawaii UI** - Pastel theme with smooth animations
+## Özellikler
 
-## Screenshots
+* 🔐 **Firebase Kimlik Doğrulama** - E-posta/şifre ile kayıt olma ve giriş yapma.
+* 🐰 **Sanal Dost** - Kendi sevimli arkadaşınızı oluşturun ve onunla ilgilenin.
+* 🍎 **Etkileşimler** - Arkadaşınızı besleyin, onunla oyun oynayın ve onu dinlendirin.
+* 📊 **Durum Yönetimi** - Arkadaşınızın farklı modları: aç, yorgun, mutlu, sıkılmış.
+* 📜 **Geçmiş** - Tüm etkileşimlerinizi ve arkadaşınızla yaptıklarınızı takip edin.
+* 🔔 **Bildirimler** - Arkadaşınızın size ihtiyacı olduğunda yerel bildirimler alın.
+* 🎨 **Kawaii Tasarım** - Yumuşak animasyonlarla desteklenmiş pastel renkli tema.
 
-| Login | Home | History | Settings |
-|-------|------|---------|----------|
-| 📱 | 🏠 | 📜 | ⚙️ |
+## Kullanılan Teknolojiler
 
-## Tech Stack
+* **Framework**: Expo (Managed Workflow)
+* **Dil**: TypeScript
+* **Stil**: NativeWind (React Native için Tailwind CSS)
+* **Navigasyon**: React Navigation (Stack + Bottom Tabs)
+* **Durum Yönetimi**: React Context + useReducer
+* **Arka Plan (Backend)**: Firebase (Auth + Firestore)
+* **Bildirimler**: Expo Notifications
 
-- **Framework**: Expo (managed workflow)
-- **Language**: TypeScript
-- **Styling**: NativeWind (Tailwind CSS for React Native)
-- **Navigation**: React Navigation (Stack + Bottom Tabs)
-- **State**: React Context + useReducer
-- **Backend**: Firebase (Auth + Firestore)
-- **Notifications**: Expo Notifications
+## Kurulum
 
-## Setup
+### 1. Gereksinimler
 
-### 1. Prerequisites
+* Node.js 18+
+* npm veya yarn
+* Expo CLI: `npm install -g expo-cli`
+* Bir Firebase projesi
 
-- Node.js 18+
-- npm or yarn
-- Expo CLI: `npm install -g expo-cli`
-- Firebase project
-
-### 2. Clone and Install
+### 2. Klonlama ve Yükleme
 
 ```bash
 cd "Virtual Companion"
 npm install
+
 ```
 
-### 3. Firebase Configuration
+### 3. Firebase Yapılandırması
 
-1. Go to [Firebase Console](https://console.firebase.google.com)
-2. Create a new project
-3. Enable **Email/Password Authentication**
-4. Create a **Firestore Database**
-5. Get your web app configuration
+1. [Firebase Console](https://console.firebase.google.com) üzerinden yeni bir proje oluşturun.
+2. **Email/Password Authentication** özelliğini aktif edin.
+3. **Firestore Database** oluşturun.
+4. Web uygulaması yapılandırma (config) bilgilerini alın.
 
-### 4. Environment Variables
+### 4. Ortam Değişkenleri
 
-Create a `.env` file in the project root:
+Proje ana dizininde bir `.env` dosyası oluşturun ve bilgilerinizi ekleyin:
 
 ```env
-EXPO_PUBLIC_FIREBASE_API_KEY=your_api_key
-EXPO_PUBLIC_FIREBASE_AUTH_DOMAIN=your_project.firebaseapp.com
-EXPO_PUBLIC_FIREBASE_PROJECT_ID=your_project_id
-EXPO_PUBLIC_FIREBASE_STORAGE_BUCKET=your_project.appspot.com
-EXPO_PUBLIC_FIREBASE_MESSAGING_SENDER_ID=your_sender_id
-EXPO_PUBLIC_FIREBASE_APP_ID=your_app_id
+EXPO_PUBLIC_FIREBASE_API_KEY=api_anahtariniz
+EXPO_PUBLIC_FIREBASE_AUTH_DOMAIN=projeniz.firebaseapp.com
+EXPO_PUBLIC_FIREBASE_PROJECT_ID=proje_id_niz
+EXPO_PUBLIC_FIREBASE_STORAGE_BUCKET=projeniz.appspot.com
+EXPO_PUBLIC_FIREBASE_MESSAGING_SENDER_ID=gonderici_id_niz
+EXPO_PUBLIC_FIREBASE_APP_ID=uygulama_id_niz
+
 ```
 
-### 5. Firestore Rules
-
-In Firebase Console → Firestore → Rules, set:
-
-```javascript
-rules_version = '2';
-service cloud.firestore {
-  match /databases/{database}/documents {
-    match /users/{userId} {
-      allow read, write: if request.auth != null && request.auth.uid == userId;
-      
-      match /interactions/{interactionId} {
-        allow read, write: if request.auth != null && request.auth.uid == userId;
-      }
-    }
-  }
-}
-```
-
-### 6. Run the App
+### 5. Uygulamayı Çalıştırma
 
 ```bash
-# Start Expo development server
+# Expo sunucusunu başlatın
 npm start
 
-# Or run directly on device/emulator
+# Veya doğrudan cihazda/emülatörde çalıştırın
 npm run android
 npm run ios
-```
-
-## Project Structure
 
 ```
-virtual-companion/
-├── App.tsx                    # Root component
-├── global.css                 # Tailwind directives
-├── tailwind.config.js         # NativeWind config
-├── assets/                    # App icons and images
-└── src/
-    ├── app/
-    │   └── navigation/
-    │       ├── AuthStack.tsx      # Auth screen stack
-    │       ├── AppTabs.tsx        # Main tab navigator
-    │       └── RootNavigator.tsx  # Root with auth gating
-    ├── context/
-    │   ├── AuthContext.tsx        # Auth state
-    │   ├── UserContext.tsx        # Friend state
-    │   └── NotificationContext.tsx
-    ├── screens/
-    │   ├── auth/
-    │   │   ├── LoginScreen.tsx
-    │   │   ├── RegisterScreen.tsx
-    │   │   └── CreateFriendScreen.tsx
-    │   ├── home/
-    │   │   └── HomeScreen.tsx
-    │   ├── communityOrHistory/
-    │   │   └── HistoryScreen.tsx
-    │   └── settings/
-    │       └── SettingsScreen.tsx
-    ├── services/
-    │   ├── firebase.ts            # Firebase init
-    │   ├── authService.ts         # Auth operations
-    │   ├── userService.ts         # Firestore operations
-    │   └── notificationService.ts # Push notifications
-    └── utils/
-        ├── dates.ts               # Date formatting
-        └── stateMachine.ts        # State transitions
-```
 
-## State Transitions
+### 5. Görseller
 
-| Action | hungry → | tired → | happy → | bored → |
-|--------|----------|---------|---------|---------|
-| 🍎 Feed | happy | bored | happy | happy |
-| 🎮 Play | bored | tired | happy | happy |
-| 💤 Rest | tired | happy | happy | tired |
+![notification](https://github.com/user-attachments/assets/c4cfae7e-500a-45f8-a734-9524209ef0c5)
+![settings](https://github.com/user-attachments/assets/f1148c4c-3e62-42e4-8ffd-e372b5c0adee)
+![history](https://github.com/user-attachments/assets/63394661-e5eb-41e2-8c47-8627f78b5bba)
+![home](https://github.com/user-attachments/assets/a1212207-063a-4136-91ac-c0fece3b8068)
 
-## Notification Schedule
+## Durum Geçişleri
 
-| Friend State | Notification Delay | Message |
-|--------------|-------------------|---------|
-| hungry | 2 hours | "Beslenmeye ihtiyacı var 🍎" |
-| bored | 3 hours | "Birlikte oynamak istiyor 🎮" |
-| tired | 4 hours | "Dinlenmek istiyor 💤" |
-| happy | 6 hours | "Arkadaşın seni özledi 🥺" |
+| Eylem | Aç → | Yorgun → | Mutlu → | Sıkılmış → |
+| --- | --- | --- | --- | --- |
+| 🍎 Besle | Mutlu | Sıkılmış | Mutlu | Mutlu |
+| 🎮 Oyna | Sıkılmış | Yorgun | Mutlu | Mutlu |
+| 💤 Dinlendir | Yorgun | Mutlu | Mutlu | Yorgun |
 
-## Testing Notifications
+## Bildirim Takvimi
 
-1. Go to **Settings** tab
-2. Enable **Notifications** toggle
-3. Tap **Test Notification** 
-4. Wait 5 seconds for test notification
+| Arkadaşın Durumu | Bildirim Gecikmesi | Mesaj |
+| --- | --- | --- |
+| Aç | 2 saat | "Beslenmeye ihtiyacı var 🍎" |
+| Sıkılmış | 3 saat | "Birlikte oynamak istiyor 🎮" |
+| Yorgun | 4 saat | "Dinlenmek istiyor 💤" |
+| Mutlu | 6 saat | "Arkadaşın seni özledi 🥺" |
 
-> ⚠️ For full notification testing, use a development build (`npx expo run:android`) instead of Expo Go.
-
-## License
-
-MIT
+---
