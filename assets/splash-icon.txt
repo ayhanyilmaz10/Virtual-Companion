@@ -1,0 +1,2 @@
+# Placeholder splash icon file
+# Replace with your actual splash icon PNG
